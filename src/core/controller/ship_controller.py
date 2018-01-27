@@ -10,7 +10,7 @@ class ShipController():
 		]
 		self.__joy_delta = [0, 0] # x, y
 		self.__dirty = False
-		
+
 		#set up joystick
 		try:
 			self.__joystick = pygame.joystick.Joystick(0) #first joystick
@@ -18,7 +18,7 @@ class ShipController():
 			self.__axes = self.__joystick.get_numaxes()
 		except:
 			print("ERROR: NOT ENOUGH JOYSTICKS - ShipController")
-			
+
 	def key_press(self, event):
 		if event.key == (pygame.K_w):
 			self.__key_delta[0] = 1
@@ -28,6 +28,8 @@ class ShipController():
 			self.__key_delta[2] = 1
 		if event.key == (pygame.K_d):
 			self.__key_delta[3] = 1
+		if event.key == (pygame.K_SPACE):
+			EventManager.get_instance().send("damage", None)
 		if event.key in (pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d):
 			self.__dirty = True
 

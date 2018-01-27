@@ -2,6 +2,7 @@ from . scene import *
 from core.camera import *
 from core.controller.gun_controller import *
 from core.controller.ship_controller import *
+from gui.entity.asteroid import *
 from gui.entity.ship import *
 
 class World(Scene):
@@ -16,6 +17,7 @@ class World(Scene):
 		self.add_controller(self.__ship_controller)
 		self.add_controller(self.__gun_controller)
 		self.add_entity(self.__ship)
+		self.add_entity(Asteroid())
 
 	def tick(self, dt):
 		super(World, self).tick(dt)

@@ -13,6 +13,9 @@ class Scene:
 		entity.set_scene(self)
 		self.__entities.append(entity)
 
+	def remove_entity(self, entity):
+		self.__entities.remove(entity)
+
 	def add_controller(self, controller):
 		self.__controllers.append(controller)
 
