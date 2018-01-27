@@ -19,4 +19,3 @@ class EventManager:
 			self.__callbacks[label].append(callback)
 		else:
 			self.__callbacks[label] = [callback]
-
