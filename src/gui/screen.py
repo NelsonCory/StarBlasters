@@ -23,6 +23,7 @@ class Screen:
 		if self.__scene:
 			del self.__scene
 		self.__scene = scene
+		self.__scene.ready()
 
 
 

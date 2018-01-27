@@ -1,8 +1,8 @@
 from . event_manager import *
-from gui.scene import *
+from gui.scene.main_menu import *
+from gui.scene.world import *
 from gui.screen import *
 import pygame
-from . ship_controller import *
 
 class Game():
 
@@ -18,7 +18,7 @@ class Game():
 	# Main loop, returns exit code
 	def run(self):
 		dt = 0
-		self.__screen.set_scene(Scene())
+		self.__screen.set_scene(World())
 		# Main loop
 		while not self.__done:
 			for event in pygame.event.get():

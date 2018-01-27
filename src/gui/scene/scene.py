@@ -1,5 +1,6 @@
+from core.event_manager import *
 from core.camera import *
-from core.ship_controller import *
+from core.controller.ship_controller import *
 
 class Scene:
 
@@ -7,7 +8,12 @@ class Scene:
 		self.__camera = Camera()
 		self.__controllers = []
 		self.__entities = []
-		self.__controllers.append(ShipController())
+
+	def addEntity(self, entity):
+		self.__entities.append(entity)
+
+	def addController(self, controller):
+		self.__controllers.append(controller)
 
 	def draw(self, screen):
 		camera_rect = self.__camera.get_rect()
@@ -27,4 +33,7 @@ class Scene:
 
 	def get_controllers(self):
 		return self.__controllers
+
+	def ready(self):
+		EventManager.get_instance().send("scene_ready", self)
 
