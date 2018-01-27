@@ -11,6 +11,7 @@ class Screen:
 		self.__surface.blit(*args, **kwargs)
 
 	def draw(self):
+		self.__surface.fill((0, 0, 0))
 		self.__scene.draw(self)
 		pygame.display.flip()
 
@@ -28,6 +29,3 @@ class Screen:
 			del self.__scene
 		self.__scene = scene
 		self.__scene.ready()
-
-
-

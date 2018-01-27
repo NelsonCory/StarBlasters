@@ -1,6 +1,7 @@
 from . entity import *
 from core.event_manager import *
 from core.resource_manager import *
+from utils.vector import *
 import math
 import pygame
 
@@ -23,7 +24,9 @@ class Ship(Entity):
 		pass
 
 	def draw(self, screen, cx, cy):
-		screen.blit(self.get_texture(), self.__position)
+		pos = add_vecs(self.__position, (cx, cy))
+		print(pos)
+		screen.blit(self.get_texture(), pos)
 
 	def on_accelerate(self, delta):
 		pass

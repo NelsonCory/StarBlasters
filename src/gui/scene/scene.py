@@ -5,7 +5,7 @@ from core.controller.ship_controller import *
 class Scene:
 
 	def __init__(self):
-		self.__camera = Camera()
+		self.__camera = None
 		self.__controllers = []
 		self.__entities = []
 
@@ -20,6 +20,7 @@ class Scene:
 		camera_rect = self.__camera.get_rect()
 		for e in self.__entities:
 			e_rect = e.get_rect()
+			print(camera_rect)
 			if camera_rect.colliderect(e_rect):
 				e.draw(screen, camera_rect.left, camera_rect.top)
 
@@ -37,4 +38,10 @@ class Scene:
 
 	def ready(self):
 		EventManager.get_instance().send("scene_ready", self)
+
+	def get_camera(self):
+		return self.__camera
+
+	def set_camera(self, camera):
+		self.__camera = camera
 
