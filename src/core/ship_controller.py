@@ -4,6 +4,7 @@ import pygame
 class ShipController:
 
     def __init__(self):
+        pass
 
     def receive_event(self, event):
         em = EventManager.get_instance()
