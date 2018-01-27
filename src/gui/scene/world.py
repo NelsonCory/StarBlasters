@@ -6,7 +6,7 @@ class World(Scene):
 
 	def __init__(self):
 		super(World, self).__init__()
-		self.__shipController = ShipController()
-		self.__gunController = GunController()
-		self.addController(self.__shipController)
-		self.addController(self.__gunController)
+		self.__ship_controller = ShipController()
+		self.__gun_controller = GunController()
+		self.add_controller(self.__ship_controller)
+		self.add_controller(self.__gun_controller)
