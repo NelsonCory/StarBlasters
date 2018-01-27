@@ -11,7 +11,7 @@ class EventManager:
 		while len(self.__queue) > 0:
 			label, value = self.__queue.pop()
 			if label in self.__callbacks:
-				for f in self.__callbacks:
+				for f in self.__callbacks[label]:
 					f(value)
 
 	def subscribe(self, label, callback):
