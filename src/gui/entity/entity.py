@@ -34,3 +34,6 @@ class Entity():
 
     def set_texture(self, texture):
         self.__texture = texture
+
+    def get_texture(self):
+        return self.__texture
