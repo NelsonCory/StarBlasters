@@ -26,7 +26,12 @@ class Game():
 					self.__done = True
 				elif event.type == pygame.KEYDOWN:
 					for controller in self.__screen.get_scene().get_controllers():
-						controller.receive_event(event)
+						controller.key_press(event)
+				elif event.type == pygame.KEYUP:
+					for controller in self.__screen.get_scene().get_controllers():
+						controller.key_release(event)
+			for controller in self.__screen.get_scene().get_controllers():
+				controller.update()
 			self.__event_manager.dispatch()
 			self.__screen.tick(dt)
 			self.__screen.draw()

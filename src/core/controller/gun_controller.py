@@ -1,22 +1,8 @@
+from core.controller.controller import *
 from core.event_manager import *
 import pygame
 
-class GunController:
+class GunController(Controller):
 
 	def __init__(self):
 		super(GunController, self).__init__()
-
-	def receive_event(self, event):
-		em = EventManager.get_instance()
-
-		if event.key == (pygame.K_w):
-			em.send("shoot_up", -1)
-
-		elif event.key == (pygame.K_a):
-			em.send("shoot_left", -1)
-
-		elif event.key == (pygame.K_s):
-			em.send("shoot_down", 1)
-
-		elif event.key == (pygame.K_d):
-			em.send("shoot_right", 1)
