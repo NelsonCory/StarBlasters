@@ -13,7 +13,7 @@ class Camera:
 		return self._nx, self._ny
 
 	#get pygame rect object
-	def getRect(self):
+	def get_rect(self):
 		return pygame.Rect(self._x,self._y,self._width,self._height)
 		
 	def get_x(self):
