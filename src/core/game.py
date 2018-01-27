@@ -17,6 +17,9 @@ class Game():
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					self.__done = True
+				# elif event.type == pygame.KEYDOWN:
+				# 	for controller in self.__screen.get_scene().get_controllers():
+				# 		controller.receive_event(event)
 			dt = self.__clock.tick(60) / 1000.0
 		return 0
 
