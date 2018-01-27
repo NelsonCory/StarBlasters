@@ -1,4 +1,5 @@
 from . entity import *
+from core.event_manager import *
 from core.resource_manager import *
 import math
 import pygame
@@ -16,9 +17,13 @@ class Ship(Entity):
 		self.__resource_manager = ResourceManager.get_instance()
 		self.set_texture(self.__resource_manager.get_image("graphics/ship"))
 		self.__gun_image = self.__resource_manager.get_image("graphics/gun")
+		EventManager.get_instance().subscribe("ship_move", self.on_accelerate)
 
 	def tick(self, dt):
 		pass
 
 	def draw(self, screen, cx, cy):
 		screen.blit(self.get_texture(), self.__position)
+
+	def on_accelerate(self, delta):
+		pass

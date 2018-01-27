@@ -20,7 +20,8 @@ class ShipController():
 			self.__key_delta[2] = 1
 		if event.key == (pygame.K_d):
 			self.__key_delta[3] = 1
-		self.__dirty = True
+		if event.key in (pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d):
+			self.__dirty = True
 
 	def key_release(self, event):
 		if event.key == (pygame.K_w):
@@ -31,12 +32,13 @@ class ShipController():
 			self.__key_delta[2] = 0
 		if event.key == (pygame.K_d):
 			self.__key_delta[3] = 0
-		self.__dirty = True
+		if event.key in (pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d):
+			self.__dirty = True
 
 	def update(self):
 		if not self.__dirty:
 			return
-		dx = min(self.__key_delta[2], self.__joy_delta[0]) + max(self.__key_delta[3], self.__joy_delta[0])
-		dy = min(self.__key_delta[0], self.__joy_delta[1]) + max(self.__key_delta[1], self.__joy_delta[1])
+		dx = min(-self.__key_delta[2], self.__joy_delta[0]) + max(self.__key_delta[3], self.__joy_delta[0])
+		dy = min(-self.__key_delta[0], self.__joy_delta[1]) + max(self.__key_delta[1], self.__joy_delta[1])
 		self.__dirty = False
 		EventManager.get_instance().send("ship_move", (dx, dy))
