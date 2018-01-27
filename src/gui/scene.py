@@ -1,3 +1,5 @@
+from core.camera import *
+
 class Scene:
 
 	def __init__(self):

@@ -11,8 +11,18 @@ class Screen:
 		self.__scene.draw(self)
 
 	def tick(self, dt):
-		self.__scene.tick(self, dt)
+		self.__scene.tick(dt)
 
 	def get_resolution(self):
 		return self.__resolution
+
+	def get_scene(self):
+		return self.__scene
+
+	def set_scene(self, scene):
+		if self.__scene:
+			del self.__scene
+		self.__scene = scene
+
+
 
