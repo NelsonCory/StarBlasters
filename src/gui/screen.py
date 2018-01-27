@@ -9,6 +9,7 @@ class Screen:
 
 	def draw(self):
 		self.__scene.draw(self)
+		pygame.display.flip()
 
 	def tick(self, dt):
 		self.__scene.tick(dt)

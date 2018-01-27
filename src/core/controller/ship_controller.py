@@ -8,15 +8,17 @@ class ShipController():
 
 	def receive_event(self, event):
 		em = EventManager.get_instance()
-
+		dx, dy = 0, 0
 		if event.key == (pygame.K_w):
-			em.send("ship_up", -1)
+			dy += -1
 
-		elif event.key == (pygame.K_a):
-			em.send("ship_left", -1)
+		if event.key == (pygame.K_a):
+			dx += 1
 
-		elif event.key == (pygame.K_s):
-			em.send("ship_down", 1)
+		if event.key == (pygame.K_s):
+			dx += 1
 
-		elif event.key == (pygame.K_d):
-			em.send("ship_right", 1)
+		if event.key == (pygame.K_d):
+			dy += 1
+
+		em.send("ship_move", (dx, dy))
