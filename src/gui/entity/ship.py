@@ -11,7 +11,7 @@ class Ship(Entity):
 		super(Ship, self).__init__()
 		self.__ship_controller = ship_controller
 		self.__gun_controller = gun_controller
-		self.__position = (0, 0)
+		self.set_position((0, 0))
 		self.__acceleration = (0, 0)
 		self.__velocity = (0, 0)
 		self.__gun_rot = 0
@@ -24,7 +24,7 @@ class Ship(Entity):
 		pass
 
 	def draw(self, screen, cx, cy):
-		pos = add_vecs(self.__position, (cx, cy))
+		pos = add_vecs(self.get_position(), (cx, cy))
 		screen.blit(self.get_texture(), pos)
 
 	def on_accelerate(self, delta):
