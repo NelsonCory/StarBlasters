@@ -10,6 +10,9 @@ class Screen:
 	def draw(self):
 		self.__scene.draw(self)
 
+	def tick(self, dt):
+		self.__scene.tick(self, dt)
+
 	def get_resolution(self):
 		return self.__resolution
 
