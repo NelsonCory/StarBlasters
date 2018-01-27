@@ -14,11 +14,11 @@ class Ship(Entity):
 		self.__velocity = (0, 0)
 		self.__gun_rot = 0
 		self.__resource_manager = ResourceManager.get_instance()
-		self.__ship_image = self.__resource_manager.get_image("graphics/ship")
+		self.set_texture(self.__resource_manager.get_image("graphics/ship"))
 		self.__gun_image = self.__resource_manager.get_image("graphics/gun")
 
 	def tick(self, dt):
 		pass
 
 	def draw(self, screen, cx, cy):
-		screen.blit(self.__ship_image, self.__position)
+		screen.blit(self.get_texture(), self.__position)

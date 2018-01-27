@@ -13,3 +13,4 @@ class World(Scene):
 		self.__ship = Ship(self.__ship_controller, self.__gun_controller)
 		self.add_controller(self.__ship_controller)
 		self.add_controller(self.__gun_controller)
+		self.add_entity(self.__ship)

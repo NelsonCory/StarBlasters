@@ -7,6 +7,9 @@ class Screen:
 		self.__surface = pygame.display.set_mode(resolution)
 		self.__scene = None
 
+	def blit(self, *args, **kwargs):
+		self.__surface.blit(*args, **kwargs)
+
 	def draw(self):
 		self.__scene.draw(self)
 		pygame.display.flip()
