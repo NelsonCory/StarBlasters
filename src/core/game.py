@@ -1,5 +1,5 @@
+from . event_manager import *
 import pygame
-
 
 class Game():
 
@@ -7,8 +7,10 @@ class Game():
 	def __init__(self):
 		pygame.init()
 
+		self.__event_manager = EventManager()
 		self.__done = False
 		self.__clock = pygame.time.Clock()
+
 
 	# Main loop, returns exit code
 	def run(self):

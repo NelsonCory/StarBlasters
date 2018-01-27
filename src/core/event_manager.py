@@ -1,6 +1,15 @@
+
+
 class EventManager:
 
+	instance = None
+
+	@staticmethod
+	def get_instance():
+		return EventManager.instance
+
 	def __init__(self):
+		EventManager.instance = self
 		self.__queue = []
 		self.__callbacks = {}
 
