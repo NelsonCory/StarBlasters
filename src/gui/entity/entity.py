@@ -1,3 +1,4 @@
+import pygame
 
 class Entity():
 
@@ -5,6 +6,8 @@ class Entity():
 
         self.__x = 0
         self.__y = 0
+
+        self.__texture = None
 
     def on_event(self, event):
 
@@ -29,3 +32,7 @@ class Entity():
     def set_y(self, y):
 
         self.__y = y
+
+    def get_rect(self):
+
+        return self.__texture.get_rect()
