@@ -11,3 +11,9 @@ def magnitude(v):
 
 def unit_vec(v):
 	return scale_vec(1/magnitude(v), v)
+
+def normalize(v):
+	try:
+		return unit_vec(v)
+	except ZeroDivisionError:
+		return (0.0, 0.0)

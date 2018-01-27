@@ -1,4 +1,5 @@
 from core.event_manager import *
+from utils.vector import *
 import pygame
 
 class ShipController():
@@ -10,7 +11,7 @@ class ShipController():
 		]
 		self.__joy_delta = [0, 0] # x, y
 		self.__dirty = False
-		
+
 		#set up joystick
 		self.__joystick = pygame.joystick.Joystick(0) #first joystick
 		self.__joystick.init()
@@ -43,12 +44,18 @@ class ShipController():
 	def update(self):
 		if not self.__dirty:
 			return
-		dx = min(-self.__key_delta[2], self.__joy_delta[0]) + max(self.__key_delta[3], self.__joy_delta[0])
-		dy = min(-self.__key_delta[0], self.__joy_delta[1]) + max(self.__key_delta[1], self.__joy_delta[1])
+		key_vector = normalize([
+			-self.__key_delta[2] + self.__key_delta[3],
+			-self.__key_delta[0] + self.__key_delta[1]
+		])
+
+		if key_vector == (0.0, 0.0):
+			dx, dy = self.__joy_delta
+		else:
+			dx, dy = key_vector
 		self.__dirty = False
 		EventManager.get_instance().send("ship_move", (dx, dy))
 
 	def receive_joy(self):
 		self.__joy_delta = (self.__axes[0], self.__axes[1])
 		#print(self.__joy_delta) #DEBUG
-		
