@@ -8,7 +8,10 @@ class GunController(Controller):
 		super(GunController, self).__init__()
 
 		#set up joystick
-		if(pygame.joystick.get_count == 2):
+		try:
 			self.__joystick = pygame.joystick.Joystick(1) #first joystick
 			self.__joystick.init()
 			self.__axes = self.__joystick.get_numaxes()
+		except:
+			print("ERROR: NOT ENOUGH JOYSTICKS- GunController")
+		
