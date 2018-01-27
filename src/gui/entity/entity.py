@@ -6,6 +6,7 @@ class Entity():
         self.__x = 0
         self.__y = 0
         self.__texture = None
+        self.__scene = None
 
     def draw(self, screen, cx, cy):
         pass
@@ -24,3 +25,12 @@ class Entity():
 
     def get_rect(self):
         return self.__texture.get_rect()
+
+    def get_scene(self):
+        return self.__scene
+
+    def set_scene(self, scene):
+        self.__scene = scene
+
+    def set_texture(self, texture):
+        self.__texture = texture

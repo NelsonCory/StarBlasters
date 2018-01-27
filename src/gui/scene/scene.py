@@ -10,6 +10,7 @@ class Scene:
 		self.__entities = []
 
 	def add_entity(self, entity):
+		entity.set_scene(self)
 		self.__entities.append(entity)
 
 	def add_controller(self, controller):
