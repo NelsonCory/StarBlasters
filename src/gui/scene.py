@@ -1,4 +1,5 @@
 from core.camera import *
+from core.ship_controller import *
 
 class Scene:
 
@@ -6,6 +7,7 @@ class Scene:
 		self.__camera = Camera()
 		self.__controllers = []
 		self.__entities = []
+		self.__controllers.append(ShipController())
 
 	def draw(self, screen):
 		camera_rect = self.__camera.get_rect()
@@ -22,4 +24,7 @@ class Scene:
 			e_rect = e.get_rect()
 			if process_rect.collide(e_rect):
 				e.tick(dt)
+
+	def get_controllers(self):
+		return self.__controllers
 
