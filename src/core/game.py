@@ -1,4 +1,5 @@
 from . event_manager import *
+from . resource_manager import *
 from gui.scene.main_menu import *
 from gui.scene.world import *
 from gui.screen import *
@@ -7,10 +8,11 @@ import pygame
 class Game():
 
 	# Initialize pygame here
-	def __init__(self):
+	def __init__(self, path):
 		pygame.init()
 
 		self.__event_manager = EventManager()
+		self.__resource_manager = ResourceManager(path)
 		self.__screen = Screen()
 		self.__done = False
 		self.__clock = pygame.time.Clock()
@@ -26,7 +28,12 @@ class Game():
 					self.__done = True
 				elif event.type == pygame.KEYDOWN:
 					for controller in self.__screen.get_scene().get_controllers():
-						controller.receive_event(event)
+						controller.key_press(event)
+				elif event.type == pygame.KEYUP:
+					for controller in self.__screen.get_scene().get_controllers():
+						controller.key_release(event)
+			for controller in self.__screen.get_scene().get_controllers():
+				controller.update()
 			self.__event_manager.dispatch()
 			self.__screen.tick(dt)
 			self.__screen.draw()

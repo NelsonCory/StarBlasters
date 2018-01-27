@@ -1,4 +1,4 @@
-
+import time
 
 class EventManager:
 
@@ -13,15 +13,20 @@ class EventManager:
 		self.__queue = []
 		self.__callbacks = {}
 
-	def send(self, label, value):
-		self.__queue.insert(0, (label, value))
+	def send(self, label, value, delay = 0):
+		self.__queue.insert(0, (label, value, time.time() + delay))
 
 	def dispatch(self):
-		while len(self.__queue) > 0:
-			label, value = self.__queue.pop()
-			if label in self.__callbacks:
-				for f in self.__callbacks[label]:
-					f(value)
+		num_events = len(self.__queue)
+		current_time = time.time()
+		for i in range(num_events):
+			label, value, timestamp = self.__queue.pop()
+			if current_time >= timestamp:
+				if label in self.__callbacks:
+					for f in self.__callbacks[label]:
+						f(value)
+			else:
+				self.__queue.insert(0, (label, value, timestamp))
 
 	def subscribe(self, label, callback):
 		if label in self.__callbacks:

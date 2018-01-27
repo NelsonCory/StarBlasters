@@ -4,5 +4,11 @@ class Controller:
 	def __init__(self):
 		pass
 
-	def receive_event(self, event):
+	def key_press(self, event):
+		pass
+
+	def key_release(self, event):
+		pass
+
+	def update(self):
 		pass
