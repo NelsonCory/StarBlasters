@@ -16,16 +16,20 @@ class Ship(Entity):
 		self.__velocity = (0, 0)
 		self.__gun_rot = 0
 		self.__resource_manager = ResourceManager.get_instance()
-		self.set_texture(self.__resource_manager.get_image("graphics/ship"))
+		self.set_texture(self.__resource_manager.get_image("graphics/mothership"))
 		self.__gun_image = self.__resource_manager.get_image("graphics/gun")
+		self.__glow1 = self.__resource_manager.get_image("graphics/mothership_brightness_2")
 		EventManager.get_instance().subscribe("ship_move", self.on_accelerate)
 
+		self.__glow_phase = 0
+
 	def tick(self, dt):
-		pass
+		self.__glow_phase += dt*5
 
 	def draw(self, screen, cx, cy):
 		pos = add_vecs(self.__position, (cx, cy))
 		screen.blit(self.get_texture(), pos)
+		screen.blit_alpha(self.__glow1, pos, (math.sin(self.__glow_phase)/2+0.5)*255)
 
 	def on_accelerate(self, delta):
-		pass
+		self.__acceleration = delta
