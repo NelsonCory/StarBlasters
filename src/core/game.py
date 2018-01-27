@@ -1,4 +1,5 @@
 from . event_manager import *
+from . resource_manager import *
 from gui.scene.main_menu import *
 from gui.scene.world import *
 from gui.screen import *
@@ -7,10 +8,11 @@ import pygame
 class Game():
 
 	# Initialize pygame here
-	def __init__(self):
+	def __init__(self, path):
 		pygame.init()
 
 		self.__event_manager = EventManager()
+		self.__resource_manager = ResourceManager(path)
 		self.__screen = Screen()
 		self.__done = False
 		self.__clock = pygame.time.Clock()

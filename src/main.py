@@ -3,7 +3,7 @@ import sys
 
 
 def main(argv):
-	game = Game()
+	game = Game(argv[0])
 	return game.run()
 
 
