@@ -23,7 +23,8 @@ class EventManager:
 			label, value, timestamp = self.__queue.pop()
 			if current_time >= timestamp:
 				if label in self.__callbacks:
-					for f in self.__callbacks[label]:
+					callbacks = self.__callbacks[label].copy()
+					for f in callbacks:
 						f(value)
 			else:
 				self.__queue.insert(0, (label, value, timestamp))
@@ -33,3 +34,6 @@ class EventManager:
 			self.__callbacks[label].append(callback)
 		else:
 			self.__callbacks[label] = [callback]
+
+	def unsubscribe(self, label, callback):
+		self.__callbacks[label].remove(callback)
