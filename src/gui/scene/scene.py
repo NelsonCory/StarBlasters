@@ -20,9 +20,8 @@ class Scene:
 		camera_rect = self.__camera.get_rect()
 		for e in self.__entities:
 			e_rect = e.get_rect()
-			print(camera_rect)
 			if camera_rect.colliderect(e_rect):
-				e.draw(screen, camera_rect.left, camera_rect.top)
+				e.draw(screen, -camera_rect.left, -camera_rect.top)
 
 	def tick(self, dt):
 		scale_factor = 3

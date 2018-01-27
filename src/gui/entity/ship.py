@@ -25,7 +25,6 @@ class Ship(Entity):
 
 	def draw(self, screen, cx, cy):
 		pos = add_vecs(self.__position, (cx, cy))
-		print(pos)
 		screen.blit(self.get_texture(), pos)
 
 	def on_accelerate(self, delta):

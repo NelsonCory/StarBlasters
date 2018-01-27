@@ -18,7 +18,5 @@ class World(Scene):
 		self.add_entity(self.__ship)
 
 	def tick(self, dt):
-		camera = self.get_camera()
-		camera.set_x(camera.get_x() + 50*dt)
 		super(World, self).tick(dt)
 
