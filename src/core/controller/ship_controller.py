@@ -17,7 +17,7 @@ class ShipController():
 			self.__joystick.init()
 			self.__axes = self.__joystick.get_numaxes()
 		except:
-			print("ERROR: NOT ENOUGH JOYSTICKS - ShipController"
+			print("ERROR: NOT ENOUGH JOYSTICKS - ShipController")
 			
 	def key_press(self, event):
 		if event.key == (pygame.K_w):
