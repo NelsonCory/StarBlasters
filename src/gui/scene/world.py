@@ -8,6 +8,8 @@ from utils.vector import *
 
 class World(Scene):
 
+	MAX_ENTITIES = 70
+
 	def __init__(self):
 		super(World, self).__init__()
 
@@ -19,9 +21,7 @@ class World(Scene):
 		self.add_controller(self.__ship_controller)
 		self.add_controller(self.__gun_controller)
 		self.add_entity(self.__ship)
-		self.add_entity(Asteroid(3))
-		self.add_entity(Asteroid(2))
-		self.add_entity(Asteroid(1))
+		EventManager.get_instance().subscribe("world_ready")
 
 	def tick(self, dt):
 		super(World, self).tick(dt)
@@ -37,4 +37,7 @@ class World(Scene):
 
 		screen.blit(self.__bg, (-cx/2, -cy/2))
 		super(World, self).draw(screen)
+
+	def init_asteroids(self):
+		pass
 
