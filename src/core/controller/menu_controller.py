@@ -31,7 +31,7 @@ class MenuController(Controller):
 	def update(self):
 			return
 
-	def receive_joy(self):
+	def receive_joy(self,event):
 		#joystick2
 		try:
 			if(self.__buttons[0]):
