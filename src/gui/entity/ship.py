@@ -54,10 +54,10 @@ class Ship(Entity):
 		self.__gun_rot += self.__delta * math.pi * dt
 
 	def draw(self, screen, cx, cy):
-
 		if not self.__alive:
 			death_pos = add_vecs(self.get_position(), (cx, cy))
 			self.__death_animation.blit(screen,death_pos)
+			self.__death_animation.loop = False
 		else:
 			distance_from_ship = 10
 			laser_start = 5
@@ -104,7 +104,7 @@ class Ship(Entity):
 		self.__delta = delta
 
 	def fire(self, arg=None):
-		if time.time() < self.__last_laser_fire:
+		if time.time() < self.__last_laser_fire or not self.__alive:
 			return
 		self.__last_laser_fire = time.time() + Ship.LASER_COOLDOWN
 		self.__laser_sound.play()
