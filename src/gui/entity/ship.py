@@ -25,6 +25,8 @@ class Ship(Entity):
 		self.__gun_rot = math.pi
 		self.__last_laser_fire = 0
 		self.__resource_manager = ResourceManager.get_instance()
+		self.__blit_laser = None
+		self.__laser_texture = self.__resource_manager.get_image("graphics/laser")
 		self.set_texture(self.__resource_manager.get_image("graphics/mothership"))
 		self.__gun_image = self.__resource_manager.get_image("graphics/mothership_gun")
 		self.__glow1 = self.__resource_manager.get_image("graphics/mothership_brightness_2")
@@ -46,6 +48,7 @@ class Ship(Entity):
 
 	def draw(self, screen, cx, cy):
 		distance_from_ship = 10
+		laser_start = 5
 
 		pos = add_vecs(self.get_position(), (cx, cy))
 		screen.blit(self.get_texture(), pos)
@@ -61,6 +64,22 @@ class Ship(Entity):
 		gun_loc = add_vecs(gun_loc, ship_center)
 		gun_loc = add_vecs(gun_loc, (cx, cy))
 		screen.blit(rotated_gun, gun_loc)
+
+		if self.__blit_laser == True:
+			distance = 750
+		elif isinstance(self.__blit_laser, pygame.Rect):
+			distance = magnitude(add_vecs(self.__blit_laser.center, scale_vec(-1, gun_center))) - laser_start
+
+		if self.__blit_laser != None:
+			scaled_laser = pygame.transform.scale(self.__laser_texture, (8, int(distance)))
+			rotated_laser = pygame.transform.rotate(scaled_laser, angle)
+			laser_loc = rotated_laser.get_rect()
+			laser_radius = gun_radius + laser_start
+			laser_loc.center = scale_vec(laser_radius + distance/2, (math.cos(self.__gun_rot), -math.sin(self.__gun_rot)))
+			laser_loc.center = add_vecs(laser_loc.center, ship_center)
+			laser_loc.center = add_vecs(laser_loc.center, (cx, cy))
+			screen.blit(rotated_laser, laser_loc)
+			self.__blit_laser = None
 
 	def kill(self):
 		self.__alive = False
@@ -103,7 +122,10 @@ class Ship(Entity):
 				closest = magnitude(v)
 				hit_asteroid = asteroid
 		if hit_asteroid:
+			self.__blit_laser = hit_asteroid.get_rect()
 			hit_asteroid.split()
+		else:
+			self.__blit_laser = True
 
 	def check_collision(self):
 		entities = self.get_scene().get_entities()
