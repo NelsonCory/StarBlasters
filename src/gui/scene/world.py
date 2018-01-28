@@ -2,6 +2,7 @@ from . scene import *
 from core.camera import *
 from core.controller.gun_controller import *
 from core.controller.ship_controller import *
+from core.event_manager import *
 from gui.entity.asteroid import *
 from gui.entity.ship import *
 from utils.vector import *
@@ -21,7 +22,8 @@ class World(Scene):
 		self.add_controller(self.__ship_controller)
 		self.add_controller(self.__gun_controller)
 		self.add_entity(self.__ship)
-		EventManager.get_instance().subscribe("world_ready")
+		self.add_entity(Asteroid(3))
+		EventManager.get_instance().subscribe("world_ready", self.init_asteroids)
 
 	def tick(self, dt):
 		super(World, self).tick(dt)

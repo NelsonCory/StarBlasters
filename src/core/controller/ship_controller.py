@@ -28,8 +28,6 @@ class ShipController():
 			self.__key_delta[2] = 1
 		if event.key == (pygame.K_d):
 			self.__key_delta[3] = 1
-		if event.key == (pygame.K_SPACE):
-			EventManager.get_instance().send("damage", None)
 		if event.key in (pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d):
 			self.__dirty = True
 

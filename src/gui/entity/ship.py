@@ -1,4 +1,5 @@
 from . entity import *
+from . asteroid import *
 from core.event_manager import *
 from core.resource_manager import *
 from utils.vector import *
@@ -24,6 +25,7 @@ class Ship(Entity):
 		self.__glow1 = self.__resource_manager.get_image("graphics/mothership_brightness_2")
 		EventManager.get_instance().subscribe("ship_move", self.on_accelerate)
 		EventManager.get_instance().subscribe("gun_rotate", self.rotate_gun)
+		EventManager.get_instance().subscribe("fire", self.fire)
 
 		self.__glow_phase = 0
 
@@ -57,3 +59,31 @@ class Ship(Entity):
 
 	def rotate_gun(self, delta):
 		self.__delta = delta
+
+	def fire(self, arg=None):
+		deg = lambda x: 180*x/math.pi - 90
+		entities = self.get_scene().get_entities()
+		hit = False
+		for asteroid in entities:
+			if not(isinstance(asteroid, Asteroid)):
+				continue
+			a_center = asteroid.get_rect().center
+			s_center = self.get_rect().center
+			v = add_vecs(a_center, scale_vec(-1, s_center))
+			n_v = normalize(v)
+			asteroid_radius = asteroid.get_rect().width/2
+			a_angle = math.acos(n_v[0])
+			if v[1] > 0:
+				a_angle = 2*math.pi - a_angle
+			theta = math.atan(asteroid_radius/magnitude(v))
+			between = [a_angle - theta, a_angle + theta]
+			gun_angle = self.__gun_rot % 2*math.pi
+			if between[0] < 0:
+				between[0] += math.pi
+				test = lambda x: x > between[0] or x < between[1]
+			else:
+				test = lambda x: between[0] < x < between[1]
+			if test(gun_angle):
+				hit = True
+				asteroid.split()
+				break
