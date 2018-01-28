@@ -3,7 +3,6 @@ class ScoreDatabase():
     def __init__(self, path):
         self.__path = path
         self.__scores = []
-        # self.__currScore = 0
     
     def load():
         self.__file = open(self.__path, 'r')
@@ -18,7 +17,6 @@ class ScoreDatabase():
             self.__file.write(score)
 
     def add(score):
-        # self.__currScore = score
         #   if less than 5 scores exist then add score
         if self.__scores.len() < 5:
             self.__scores.append(score)
