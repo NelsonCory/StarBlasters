@@ -18,8 +18,8 @@ class World(Scene):
 		self.add_controller(self.__gun_controller)
 		self.add_entity(self.__ship)
 		self.add_entity(Asteroid(3))
-		self.add_entity(Asteroid(2))
-		self.add_entity(Asteroid(1))
+		#self.add_entity(Asteroid(2))
+		#self.add_entity(Asteroid(1))
 
 	def tick(self, dt):
 		super(World, self).tick(dt)

@@ -38,6 +38,9 @@ class Scene:
 	def get_controllers(self):
 		return self.__controllers
 
+	def get_entities(self):
+		return self.__entities
+
 	def ready(self):
 		EventManager.get_instance().send("scene_ready", self)
 
