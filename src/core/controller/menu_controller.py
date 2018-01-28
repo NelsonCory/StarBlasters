@@ -19,11 +19,12 @@ class MenuController():
 			self.__joystick2 = pygame.joystick.Joystick(1)
 			self.__joystick2.init()
 			self.__buttons2 = self.__joystick2.get_button(3)
-
+		except:
+			pass
 	def key_release(self, event):
 		#go to world, keyboard command
 		if event.key == pygame.K_SPACE:
-			pass
+			EventManager.get_instance().send("on_start", None)
 		
 		
 	def update(self):
@@ -33,14 +34,14 @@ class MenuController():
 	def receive_joy(self):
 		#joystick2
 		try:
-			if(self.__buttons[]):
-				pass
+			if(self.__buttons[0]):
+				EventManager.get_instance().send("on_start", None)
 		except:
 			print("ERROR - menuController, receive view")
 		#joystick2
 		try:
 			if(self.__buttons2[0]):
-				return self.__buttons2[0]
+				EventManager.get_instance().send("on_start", None)
 		except:
 			pass
 			
