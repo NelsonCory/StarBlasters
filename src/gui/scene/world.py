@@ -10,12 +10,16 @@ from utils.vector import *
 
 class World(Scene):
 
-	MIN_ASTEROIDS = 20
+	MIN_ASTEROIDS = 10
 
 	def __init__(self):
 		super(World, self).__init__()
 
-		self.__bg = ResourceManager.get_instance().get_image("graphics/background_1")
+		self.__backgrounds = [
+			ResourceManager.get_instance().get_image("background_1"),
+			ResourceManager.get_instance().get_image("background_2"),
+			ResourceManager.get_instance().get_image("background_3")
+		]
 		self.__ship_controller = ShipController()
 		self.__gun_controller = GunController()
 		self.__ship = Ship(self.__ship_controller, self.__gun_controller)
@@ -48,6 +52,9 @@ class World(Scene):
 
 		screen.blit(self.__bg, (-cx/2, -cy/2))
 		super(World, self).draw(screen)
+
+	def get_background(x, y, seed):
+		pass
 
 	def init_asteroids(self):
 		pass
