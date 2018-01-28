@@ -9,14 +9,13 @@ class MainMenu(Scene):
 		self.__menu_controller = MenuController()
 		self.add_controller(self.__menu_controller)
 		self.set_camera(Camera())
-		self.__music = ResourceManager.get_instance().get_sound("sounds/main_menu_theme")
+		self.__music = ResourceManager.get_instance().get_music("music/main_menu_theme")
 		pygame.mixer.music.play(-1, 0.0)
-	
+
 	def __del__(self):
 		pygame.mixer.music.stop()
-	
+
 	def draw(self, screen):
 		image = ResourceManager.get_instance().get_image("graphics/menu_prompt")
 		screen.blit(image,(0,0))
 		super(MainMenu, self).draw(screen)
-	
