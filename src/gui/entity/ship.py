@@ -99,7 +99,7 @@ class Ship(Entity):
 		self.__delta = delta
 
 	def fire(self, arg=None):
-		if time.time() < self.__last_laser_fire:
+		if time.time() < self.__last_laser_fire or not self.__alive:
 			return
 		self.__last_laser_fire = time.time() + Ship.LASER_COOLDOWN
 		self.__laser_sound.play()
@@ -147,5 +147,5 @@ class Ship(Entity):
 			v = add_vecs(a_center, scale_vec(-1, s_center))
 			distance = magnitude(v)
 			if distance <= a_radius+s_radius:
-				return False
+				return True
 		return False

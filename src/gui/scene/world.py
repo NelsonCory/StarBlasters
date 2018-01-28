@@ -3,6 +3,7 @@ from core.camera import *
 from core.controller.gun_controller import *
 from core.controller.ship_controller import *
 from core.event_manager import *
+from core.score_database import *
 from gui.entity.asteroid import *
 from gui.entity.ship import *
 import random
@@ -28,7 +29,6 @@ class World(Scene):
 		self.__score = 0
 		self.__alive = True
 		self.__ready = False
-		self.__font = pygame.font.SysFont('Arial', 30)
 		self.set_camera(Camera())
 		self.add_controller(self.__ship_controller)
 		self.add_controller(self.__gun_controller)
@@ -71,8 +71,6 @@ class World(Scene):
 				adjusted_bg_pos = add_vecs(background_pos, (cx, cy))
 				screen.blit(background, adjusted_bg_pos)
 		super(World, self).draw(screen)
-		text_surface = self.__font.render(str(len(self.get_entities())), False, (255, 255, 255))
-		screen.blit(text_surface, (0, 0))
 
 	def get_background(self, x, y):
 		v = (int(x) << 16) + int(y) + self.__seed
@@ -96,11 +94,12 @@ class World(Scene):
 		self.__score += value
 
 	def on_death(self, event):
-		print("You dead")
 		self.__alive = False
 		self.__ship.kill()
 		EventManager.get_instance().unsubscribe("death", self.on_death)
 		print("You dead. Final score:", self.__score)
+		ScoreDatabase.get_instance().add(self.__score)
+
 
 	def on_start(self, event):
 		EventManager.get_instance().send("activate_asteroids", None, 6.84)

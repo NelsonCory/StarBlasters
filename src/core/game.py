@@ -1,5 +1,6 @@
 from . event_manager import *
 from . resource_manager import *
+from . score_database import *
 from gui.scene.main_menu import *
 from gui.scene.world import *
 from gui.screen import *
@@ -15,6 +16,8 @@ class Game():
 
 		self.__event_manager = EventManager()
 		self.__resource_manager = ResourceManager(path)
+		self.__score_database = ScoreDatabase(path)
+		self.__score_database.load()
 		self.__screen = Screen()
 		self.__done = False
 		self.__clock = pygame.time.Clock()
