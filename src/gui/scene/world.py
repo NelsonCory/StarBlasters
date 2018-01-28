@@ -37,6 +37,9 @@ class World(Scene):
 		EventManager.get_instance().subscribe("scene_ready", self.on_start)
 		EventManager.get_instance().subscribe("activate_asteroids", self.on_ready)
 
+		self.__music = ResourceManager.get_instance().get_music("music/game_intro")
+		self.__music.play()
+
 	def tick(self, dt):
 		super(World, self).tick(dt)
 		if self.__alive:
@@ -89,7 +92,9 @@ class World(Scene):
 		print("You dead. Final score:", self.__score)
 
 	def on_start(self, event):
-		EventManager.get_instance().send("activate_asteroids", self.on_ready, 6)
+		EventManager.get_instance().send("activate_asteroids", None, 6.84)
 
 	def on_ready(self, event):
+		self.__music = ResourceManager.get_instance().get_music("music/game_music")
+		self.__music.play(-1, 0)	
 		self.__ready = True
