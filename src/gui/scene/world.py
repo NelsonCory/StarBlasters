@@ -16,9 +16,9 @@ class World(Scene):
 		super(World, self).__init__()
 
 		self.__backgrounds = [
-			ResourceManager.get_instance().get_image("background_1"),
-			ResourceManager.get_instance().get_image("background_2"),
-			ResourceManager.get_instance().get_image("background_3")
+			ResourceManager.get_instance().get_image("graphics/background_1"),
+			ResourceManager.get_instance().get_image("graphics/background_2"),
+			ResourceManager.get_instance().get_image("graphics/background_3")
 		]
 		self.__ship_controller = ShipController()
 		self.__gun_controller = GunController()
@@ -50,7 +50,7 @@ class World(Scene):
 		cx  = camera.get_x()
 		cy  = camera.get_y()
 
-		screen.blit(self.__bg, (-cx/2, -cy/2))
+		screen.blit(self.__backgrounds[0], (-cx/2, -cy/2))
 		super(World, self).draw(screen)
 
 	def get_background(x, y, seed):
