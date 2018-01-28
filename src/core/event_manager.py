@@ -36,4 +36,7 @@ class EventManager:
 			self.__callbacks[label] = [callback]
 
 	def unsubscribe(self, label, callback):
-		self.__callbacks[label].remove(callback)
+		try:
+			self.__callbacks[label].remove(callback)
+		except ValueError:
+			pass
