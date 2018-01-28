@@ -13,4 +13,5 @@ class MainMenu(Scene):
 	def draw(self, screen):
 		image = ResourceManager.get_instance().get_image("graphics/menu_prompt")
 		screen.blit(image,(0,0))
+		music = ResourceManager.get_instance().get_sound("sounds/main_menu_theme")
 		super(MainMenu, self).draw(screen)
