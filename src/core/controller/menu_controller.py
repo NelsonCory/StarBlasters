@@ -13,7 +13,7 @@ class MenuController(Controller):
 			self.__joystick.init()
 			self.__buttons = self.__joystick.get_button(3)
 		except:
-			print("ERROR: NOT ENOUGH JOYSTICKS - ShipController")
+			print("ERROR: NOT ENOUGH JOYSTICKS - MenuController")
 		
 		#set up joystick 2
 		try:
@@ -43,7 +43,6 @@ class MenuController(Controller):
 		#joystick2
 		try:
 			self.__buttons2 = self.__joystick2.get_button(3)
-			print(self.__buttons2)
 			if(self.__buttons2):
 				EventManager.get_instance().send("on_start", None)
 		except:

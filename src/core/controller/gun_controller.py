@@ -18,8 +18,8 @@ class GunController(Controller):
 		try:
 			self.__joystick = pygame.joystick.Joystick(1) #first joystick
 			self.__joystick.init()
-			self.__axes = self.__joystick.get_numaxes()
-			self.__buttons = self.__joystick.get_numbuttons()
+			self.__axes = self.__joystick.get_axis()
+			self.__buttons = self.__joystick.get_button(0) # "A" button
 		except:
 			print("ERROR: NOT ENOUGH JOYSTICKS- GunController")
 
@@ -40,6 +40,17 @@ class GunController(Controller):
 			self.__key_delta[1] = 0
 		if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
 			self.__dirty = True
+
+	def receive_joy(self, event):
+		try:
+			self.__key_delta[0] = self.__joystick.get_axis(0)
+			self._key_delta[1] = self.__joystick.get_axis(1)
+			self.__dirty = True
+			self.__buttons = self.__joystick.get_button(3)
+			if(self.__buttons):
+				EventManager.get_instance().send("fire", None)
+		except:
+			print("ERROR - gun controller")
 
 	def fire_gun(self, event):
 
