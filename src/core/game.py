@@ -20,6 +20,7 @@ class Game():
 		self.__clock = pygame.time.Clock()
 
 		self.__event_manager.subscribe("on_start", self.on_start)
+		self.__event_manager.subscribe("main_menus", self.set_main_menu)
 
 	# Main loop, returns exit code
 	def run(self):
@@ -28,7 +29,7 @@ class Game():
 		# Main loop
 		while not self.__done:
 			for event in pygame.event.get():
-				if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+				if event.type == pygame.QUIT:
 					self.__done = True
 				elif event.type == pygame.KEYDOWN:
 					for controller in self.__screen.get_scene().get_controllers():
@@ -54,3 +55,6 @@ class Game():
 
 	def exit(self):
 		self.__done = True
+
+	def set_main_menu(self, event):
+		self.__screen.set_scene(MainMenu())

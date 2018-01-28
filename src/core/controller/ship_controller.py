@@ -30,6 +30,8 @@ class ShipController():
 			self.__key_delta[3] = 1
 		if event.key in (pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d):
 			self.__dirty = True
+		if event.key == (pygame.K_ESCAPE):
+			EventManager.get_instance().send("main_menus", None)
 
 	def key_release(self, event):
 		if event.key == (pygame.K_w):
@@ -52,6 +54,9 @@ class ShipController():
 		EventManager.get_instance().send("ship_move", (dx, dy))
 
 	def receive_joy(self, event):
+		if event.type == pygame.JOYBUTTONDOWN:
+			if self.__joystick.get_button(1):
+				EventManager.get_instance().send("main_menus", None)
 		axis_x = self.__joystick.get_axis(0)
 		axis_y = self.__joystick.get_axis(1)
 		self.__joy_delta = (axis_x, axis_y)
