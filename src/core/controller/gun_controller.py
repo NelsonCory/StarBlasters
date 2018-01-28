@@ -28,6 +28,8 @@ class GunController(Controller):
 			self.__key_delta[0] = 1
 		if event.key == pygame.K_RIGHT:
 			self.__key_delta[1] = 1
+		if event.key == pygame.K_SPACE:
+			EventManager.get_instance().send("fire", None)
 		if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
 			self.__dirty = True
 
