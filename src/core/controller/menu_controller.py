@@ -8,11 +8,12 @@ class MenuController(Controller):
 		super(MenuController, self).__init__()
 
 		#set up joystick 1
-		
-		self.__joystick = pygame.joystick.Joystick(0) #first joystick
-		self.__joystick.init()
-		self.__buttons = self.__joystick.get_button(3)
-		#print("ERROR: NOT ENOUGH JOYSTICKS - ShipController")
+		try:
+			self.__joystick = pygame.joystick.Joystick(0) #first joystick
+			self.__joystick.init()
+			self.__buttons = self.__joystick.get_button(3)
+		except:
+			print("ERROR: NOT ENOUGH JOYSTICKS - ShipController")
 		
 		#set up joystick 2
 		try:
