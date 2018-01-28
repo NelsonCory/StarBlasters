@@ -14,7 +14,7 @@ class ResourceManager:
 			surface = pygame.image.load(os.path.join(self.__base_path, "graphics/" + file))
 			self.__graphics[key] = surface
 		for file in os.listdir(self.__base_path + "sounds/"):
-			key = "sounds/" + os.path.splitext(file)[0]
+			key = "sounds/" + os.path.splitext(os.path.basename(file))[0]
 			sound = pygame.mixer.Sound(os.path.join(self.__base_path, "sounds/" + file))
 			self.__sounds[key] = sound
 
