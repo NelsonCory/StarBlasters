@@ -68,3 +68,6 @@ class Scene:
 	def set_camera(self, camera):
 		self.__camera = camera
 
+	def clean(self):
+		pass
+
