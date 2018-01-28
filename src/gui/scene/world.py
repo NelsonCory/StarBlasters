@@ -99,7 +99,7 @@ class World(Scene):
 		EventManager.get_instance().unsubscribe("death", self.on_death)
 		print("You dead. Final score:", self.__score)
 		ScoreDatabase.get_instance().add(self.__score)
-
+		EventManager.get_instance().send("main_menu", None, 3)
 
 	def on_start(self, event):
 		EventManager.get_instance().send("activate_asteroids", None, 6.84)
