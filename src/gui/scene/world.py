@@ -74,7 +74,7 @@ class World(Scene):
 		print("You dead. Final score:", self.__score)
 
 	def on_start(self, event):
-		EventManager.get_instance().send("activate_asteroids", self.on_ready, 5)
+		EventManager.get_instance().send("activate_asteroids", self.on_ready, 6)
 
 	def on_ready(self, event):
 		self.__ready = True

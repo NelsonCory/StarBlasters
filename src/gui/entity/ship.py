@@ -5,10 +5,12 @@ from core.resource_manager import *
 from utils.vector import *
 import math
 import pygame
+import time
 
 class Ship(Entity):
 
 	ACCELERATION = 15
+	LASER_COOLDOWN = 0.5
 
 	def __init__(self, ship_controller, gun_controller):
 		super(Ship, self).__init__()
@@ -19,16 +21,17 @@ class Ship(Entity):
 		self.set_position((0, 0))
 		self.__acceleration = (0, 0)
 		self.__velocity = (0, 0)
+		self.__glow_phase = 0
 		self.__gun_rot = math.pi
+		self.__last_laser_fire = 0
 		self.__resource_manager = ResourceManager.get_instance()
 		self.set_texture(self.__resource_manager.get_image("graphics/mothership"))
 		self.__gun_image = self.__resource_manager.get_image("graphics/mothership_gun")
 		self.__glow1 = self.__resource_manager.get_image("graphics/mothership_brightness_2")
+		self.__laser_sound = self.__resource_manager.get_sound("sounds/laser")
 		EventManager.get_instance().subscribe("ship_move", self.on_accelerate)
 		EventManager.get_instance().subscribe("gun_rotate", self.rotate_gun)
 		EventManager.get_instance().subscribe("fire", self.fire)
-
-		self.__glow_phase = 0
 
 	def tick(self, dt):
 		if not self.__alive:
@@ -69,6 +72,10 @@ class Ship(Entity):
 		self.__delta = delta
 
 	def fire(self, arg=None):
+		if time.time() < self.__last_laser_fire:
+			return
+		self.__last_laser_fire = time.time() + Ship.LASER_COOLDOWN
+		self.__laser_sound.play()
 		deg = lambda x: 180*x/math.pi - 90
 		entities = self.get_scene().get_entities()
 		closest = 999999
