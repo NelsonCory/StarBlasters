@@ -42,15 +42,15 @@ class GunController(Controller):
 			self.__dirty = True
 
 	def receive_joy(self, event):
-		try:
-			self.__key_delta[0] = self.__joystick.get_axis(0)
-			self._key_delta[1] = self.__joystick.get_axis(1)
-			self.__dirty = True
-			self.__buttons = self.__joystick.get_button(3)
-			if(self.__buttons):
-				EventManager.get_instance().send("fire", None)
-		except:
-			print("ERROR - gun controller")
+
+		self.__key_delta[0] = self.__joystick.get_axis(1)
+		self.__key_delta[1] = self.__joystick.get_axis(0)
+		self.__buttons = self.__joystick.get_button(0)
+		if(self.__buttons):
+			print("FIRE!")
+			EventManager.get_instance().send("fire", None)
+		self.__dirty = True
+		#print("ERROR - gun controller")
 
 	def fire_gun(self, event):
 
