@@ -34,9 +34,10 @@ class Game():
 				elif event.type == pygame.KEYUP:
 					for controller in self.__screen.get_scene().get_controllers():
 						controller.key_release(event)
-				elif event.type == pygame.JOYAXISMOTION:
+				elif event.type == pygame.JOYAXISMOTION or event.type == pygame.JOYBUTTONDOWN:
 					for controller in self.__screen.get_scene().get_controllers():
 						controller.receive_joy(event)
+				
 			for controller in self.__screen.get_scene().get_controllers():
 				controller.update()
 			self.__event_manager.dispatch()
