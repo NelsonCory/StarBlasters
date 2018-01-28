@@ -33,6 +33,10 @@ class Ship(Entity):
 		self.__glow_phase += dt*5
 		self.__velocity = scale_vec(0.95, add_vecs(self.__velocity, scale_vec(dt, self.__acceleration)))
 		self.set_position(add_vecs(self.get_position(), self.__velocity))
+		if self.check_collision():
+			print("Dead.")
+		else:
+			print("not dead")
 
 		self.__gun_rot += self.__delta * math.pi * dt
 
@@ -87,3 +91,18 @@ class Ship(Entity):
 				hit = True
 				asteroid.split()
 				break
+
+	def check_collision(self):
+		entities = self.get_scene().get_entities()
+		for asteroid in entities:
+			if not(isinstance(asteroid, Asteroid)):
+				continue
+			a_center = asteroid.get_rect().center
+			a_radius = asteroid.get_rect().width/2 - 5*asteroid.get_size()
+			s_center = self.get_rect().center
+			s_radius = self.get_rect().width/2
+			v = add_vecs(a_center, scale_vec(-1, s_center))
+			distance = magnitude(v)
+			if distance <= a_radius+s_radius:
+				return True
+		return False
