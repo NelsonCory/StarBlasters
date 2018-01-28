@@ -5,7 +5,7 @@ from core.controller.ship_controller import *
 from core.event_manager import *
 from gui.entity.asteroid import *
 from gui.entity.ship import *
-from random import randrange
+import random
 from utils.vector import *
 
 class World(Scene):
@@ -16,10 +16,12 @@ class World(Scene):
 		super(World, self).__init__()
 
 		self.__backgrounds = [
-			ResourceManager.get_instance().get_image("background_1"),
-			ResourceManager.get_instance().get_image("background_2"),
-			ResourceManager.get_instance().get_image("background_3")
+			ResourceManager.get_instance().get_image("graphics/background_1"),
+			ResourceManager.get_instance().get_image("graphics/background_2"),
+			ResourceManager.get_instance().get_image("graphics/background_3")
 		]
+		self.__background_size = (3000, 2000)
+		self.__seed = int(time.time())
 		self.__ship_controller = ShipController()
 		self.__gun_controller = GunController()
 		self.__ship = Ship(self.__ship_controller, self.__gun_controller)
@@ -47,17 +49,20 @@ class World(Scene):
 
 	def draw(self, screen):
 		camera = self.get_camera()
-		cx  = camera.get_x()
-		cy  = camera.get_y()
-
-		screen.blit(self.__bg, (-cx/2, -cy/2))
+		cx = -camera.get_x()/2
+		cy = -camera.get_y()/2
+		chunk_coords = cx//self.__background_size[0], cy//self.__background_size[1]
+		print(chunk_coords)
+		background = self.get_background(chunk_coords[0], chunk_coords[1])
+		screen.blit(background, (cx, cy))
 		super(World, self).draw(screen)
 
-	def get_background(x, y, seed):
-		pass
-
-	def init_asteroids(self):
-		pass
+	def get_background(self, x, y):
+		v = (int(x) << 16) + int(y) + self.__seed
+		random.seed(v)
+		bg = self.__backgrounds[random.randrange(0, len(self.__backgrounds))]
+		random.seed(None)
+		return bg
 
 	def spawn_asteroid(self):
 		prect = self.get_processing_rect()
