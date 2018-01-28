@@ -36,6 +36,7 @@ class Screen:
 
 	def set_scene(self, scene):
 		if self.__scene:
+			self.__scene.clean()
 			del self.__scene
 		self.__scene = scene
 		self.__scene.ready()
