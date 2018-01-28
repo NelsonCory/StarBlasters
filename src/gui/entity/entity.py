@@ -20,7 +20,8 @@ class Entity():
         self.__position = position
 
     def get_rect(self):
-        return self.__texture.get_rect()
+        rect = self.__texture.get_rect()
+        return pygame.Rect(self.__position[0], self.__position[1], rect[2], rect[3])
 
     def get_scene(self):
         return self.__scene

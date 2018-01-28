@@ -17,6 +17,8 @@ class Game():
 		self.__done = False
 		self.__clock = pygame.time.Clock()
 
+		self.__event_manager.subscribe("on_start", self.on_start)
+
 	# Main loop, returns exit code
 	def run(self):
 		dt = 0

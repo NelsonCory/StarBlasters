@@ -29,6 +29,7 @@ class Ship(Entity):
 		self.__glow_phase += dt*5
 		self.__velocity = add_vecs(self.__velocity, scale_vec(dt, self.__acceleration))
 		self.set_position(add_vecs(self.get_position(), self.__velocity))
+		print(self.__velocity)
 
 	def draw(self, screen, cx, cy):
 		pos = add_vecs(self.get_position(), (cx, cy))
