@@ -53,9 +53,8 @@ class ShipController():
 		self.__dirty = False
 		EventManager.get_instance().send("ship_move", (dx, dy))
 
-	def receive_joy(self):
-		try:
-			self.__joy_delta = (self.__axes[0], self.__axes[1])
-			#print(self.__joy_delta) #DEBUG
-		except:
-			print("ERROR: NOT ENOUGH JOYSTICKS - receive_joy")
+	def receive_joy(self, event):
+		axis_x = self.__joystick.get_axis(0)
+		axis_y = self.__joystick.get_axis(1)
+		self.__joy_delta = (axis_x, axis_y)
+		self.__dirty = True
