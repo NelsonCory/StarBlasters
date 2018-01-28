@@ -51,10 +51,13 @@ class World(Scene):
 		camera = self.get_camera()
 		cx = -camera.get_x()/2
 		cy = -camera.get_y()/2
-		chunk_coords = cx//self.__background_size[0], cy//self.__background_size[1]
-		print(chunk_coords)
-		background = self.get_background(chunk_coords[0], chunk_coords[1])
-		screen.blit(background, (cx, cy))
+		chunk_coords = -cx//self.__background_size[0], -cy//self.__background_size[1]
+		for i in range(0, 2):
+			for j in range(0, 2):
+				background = self.get_background(chunk_coords[0] + i, chunk_coords[1] + j)
+				background_pos = (self.__background_size[0] * (chunk_coords[0] + i), self.__background_size[1] * (chunk_coords[1] + j))
+				adjusted_bg_pos = add_vecs(background_pos, (cx, cy))
+				screen.blit(background, adjusted_bg_pos)
 		super(World, self).draw(screen)
 
 	def get_background(self, x, y):
