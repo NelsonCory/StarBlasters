@@ -1,7 +1,8 @@
 from core.event_manager import *
+from . controller import *
 import pygame
 
-class MenuController():
+class MenuController(Controller):
 
 	def __init__(self):
 		super(MenuController, self).__init__()
@@ -28,7 +29,6 @@ class MenuController():
 		
 		
 	def update(self):
-		if not self.__dirty:
 			return
 
 	def receive_joy(self):
