@@ -54,8 +54,8 @@ class Scene:
 		x, y, width, height = self.__camera.get_rect()
 		x -= width
 		y -= height
-		width *= 2
-		height *= 2
+		width *= 3
+		height *= 3
 		return pygame.Rect(x, y, width, height)
 
 
