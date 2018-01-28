@@ -8,18 +8,18 @@ class MenuController(Controller):
 		super(MenuController, self).__init__()
 
 		#set up joystick 1
-		try:
-			self.__joystick = pygame.joystick.Joystick(0) #first joystick
-			self.__joystick.init()
-			self.__buttons = self.__joystick.get_button(3)
-		except:
-			print("ERROR: NOT ENOUGH JOYSTICKS - ShipController")
+		
+		self.__joystick = pygame.joystick.Joystick(0) #first joystick
+		self.__joystick.init()
+		self.__buttons = self.__joystick.get_button(3)
+		#print("ERROR: NOT ENOUGH JOYSTICKS - ShipController")
 		
 		#set up joystick 2
 		try:
 			self.__joystick2 = pygame.joystick.Joystick(1)
 			self.__joystick2.init()
 			self.__buttons2 = self.__joystick2.get_button(3)
+			
 		except:
 			pass
 	def key_release(self, event):
@@ -32,15 +32,18 @@ class MenuController(Controller):
 			return
 
 	def receive_joy(self,event):
-		#joystick2
+		#joystick1
 		try:
-			if(self.__buttons[0]):
+			self.__buttons = self.__joystick.get_button(3)
+			if(self.__buttons):
 				EventManager.get_instance().send("on_start", None)
 		except:
 			print("ERROR - menuController, receive view")
 		#joystick2
 		try:
-			if(self.__buttons2[0]):
+			self.__buttons2 = self.__joystick2.get_button(3)
+			print(self.__buttons2)
+			if(self.__buttons2):
 				EventManager.get_instance().send("on_start", None)
 		except:
 			pass
