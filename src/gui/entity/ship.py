@@ -15,6 +15,7 @@ class Ship(Entity):
 		self.__delta = 0
 		self.__ship_controller = ship_controller
 		self.__gun_controller = gun_controller
+		self.__alive = True
 		self.set_position((0, 0))
 		self.__acceleration = (0, 0)
 		self.__velocity = (0, 0)
@@ -30,13 +31,13 @@ class Ship(Entity):
 		self.__glow_phase = 0
 
 	def tick(self, dt):
+		if not self.__alive:
+			return
 		self.__glow_phase += dt*5
 		self.__velocity = scale_vec(0.95, add_vecs(self.__velocity, scale_vec(dt, self.__acceleration)))
 		self.set_position(add_vecs(self.get_position(), self.__velocity))
 		if self.check_collision():
-			print("Dead.")
-		else:
-			print("not dead")
+			EventManager.get_instance().send("death", True)
 
 		self.__gun_rot += self.__delta * math.pi * dt
 
@@ -58,6 +59,9 @@ class Ship(Entity):
 		gun_loc = add_vecs(gun_loc, (cx, cy))
 		screen.blit(rotated_gun, gun_loc)
 
+	def kill(self):
+		self.__alive = False
+
 	def on_accelerate(self, delta):
 		self.__acceleration = scale_vec(Ship.ACCELERATION, delta)
 
@@ -67,7 +71,8 @@ class Ship(Entity):
 	def fire(self, arg=None):
 		deg = lambda x: 180*x/math.pi - 90
 		entities = self.get_scene().get_entities()
-		hit = False
+		closest = 999999
+		hit_asteroid = None
 		for asteroid in entities:
 			if not(isinstance(asteroid, Asteroid)):
 				continue
@@ -87,10 +92,11 @@ class Ship(Entity):
 				test = lambda x: x > between[0] or x < between[1]
 			else:
 				test = lambda x: between[0] < x < between[1]
-			if test(gun_angle):
-				hit = True
-				asteroid.split()
-				break
+			if test(gun_angle) and magnitude(v) < closest:
+				closest = magnitude(v)
+				hit_asteroid = asteroid
+		if hit_asteroid:
+			hit_asteroid.split()
 
 	def check_collision(self):
 		entities = self.get_scene().get_entities()
