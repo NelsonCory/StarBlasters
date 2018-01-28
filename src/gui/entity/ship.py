@@ -104,7 +104,7 @@ class Ship(Entity):
 		self.__delta = delta
 
 	def fire(self, arg=None):
-		if time.time() < self.__last_laser_fire:
+		if time.time() < self.__last_laser_fire or not self.__alive:
 			return
 		self.__last_laser_fire = time.time() + Ship.LASER_COOLDOWN
 		self.__laser_sound.play()

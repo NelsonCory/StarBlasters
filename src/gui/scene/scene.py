@@ -58,7 +58,6 @@ class Scene:
 		height *= 3
 		return pygame.Rect(x, y, width, height)
 
-
 	def ready(self):
 		EventManager.get_instance().send("scene_ready", self)
 
