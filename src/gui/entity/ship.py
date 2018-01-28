@@ -7,7 +7,7 @@ import pygame
 
 class Ship(Entity):
 
-	ACCELERATION = 5
+	ACCELERATION = 15
 
 	def __init__(self, ship_controller, gun_controller):
 		super(Ship, self).__init__()
@@ -29,9 +29,8 @@ class Ship(Entity):
 
 	def tick(self, dt):
 		self.__glow_phase += dt*5
-		self.__velocity = add_vecs(self.__velocity, scale_vec(dt, self.__acceleration))
+		self.__velocity = scale_vec(0.95, add_vecs(self.__velocity, scale_vec(dt, self.__acceleration)))
 		self.set_position(add_vecs(self.get_position(), self.__velocity))
-		print(self.__velocity)
 
 		self.__gun_rot += self.__delta * math.pi * dt
 

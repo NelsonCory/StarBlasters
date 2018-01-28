@@ -22,7 +22,7 @@ class Game():
 	# Main loop, returns exit code
 	def run(self):
 		dt = 0
-		self.__screen.set_scene(MainMenu())
+		self.__screen.set_scene(World())
 		# Main loop
 		while not self.__done:
 			for event in pygame.event.get():
