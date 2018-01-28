@@ -6,6 +6,7 @@ from utils.vector import *
 import math
 import pygame
 import time
+from utils import pyganim
 
 class Ship(Entity):
 
@@ -31,6 +32,11 @@ class Ship(Entity):
 		self.__gun_image = self.__resource_manager.get_image("graphics/mothership_gun")
 		self.__glow1 = self.__resource_manager.get_image("graphics/mothership_brightness_2")
 		self.__laser_sound = self.__resource_manager.get_sound("sounds/laser")
+		self.__death_animation = pyganim.PygAnimation([(self.__resource_manager.get_image("graphics/boom1"),0.12),
+			(self.__resource_manager.get_image("graphics/boom2"),0.12),
+			(self.__resource_manager.get_image("graphics/boom3"),0.12),
+			(self.__resource_manager.get_image("graphics/boom4"),0.12),
+			])
 		EventManager.get_instance().subscribe("ship_move", self.on_accelerate)
 		EventManager.get_instance().subscribe("gun_rotate", self.rotate_gun)
 		EventManager.get_instance().subscribe("fire", self.fire)
