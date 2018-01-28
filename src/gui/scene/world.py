@@ -41,7 +41,7 @@ class World(Scene):
 		self.__music = ResourceManager.get_instance().get_music("music/game_intro")
 		self.__music.play()
 
-	def __del__(self):
+	def clean(self):
 		EventManager.get_instance().unsubscribe("award_score", self.award_score)
 		EventManager.get_instance().unsubscribe("death", self.on_death)
 		EventManager.get_instance().unsubscribe("scene_ready", self.on_start)
