@@ -77,9 +77,9 @@ class Ship(Entity):
 				a_angle = 2*math.pi - a_angle
 			theta = math.atan(asteroid_radius/magnitude(v))
 			between = [a_angle - theta, a_angle + theta]
-			gun_angle = self.__gun_rot % 2*math.pi
+			gun_angle = self.__gun_rot % (2*math.pi)
 			if between[0] < 0:
-				between[0] += math.pi
+				between[0] += 2*math.pi
 				test = lambda x: x > between[0] or x < between[1]
 			else:
 				test = lambda x: between[0] < x < between[1]

@@ -11,7 +11,7 @@ class Asteroid(Entity):
 	def __init__(self, size=None, position=(0, 0)):
 		super(Asteroid, self).__init__()
 		if size == None:
-			self.__size = random.randint(3, 3)
+			self.__size = random.randint(100, 500)
 		else:
 			self.__size = size
 		angle = random.uniform(0, 2*math.pi)
