@@ -7,6 +7,8 @@ import pygame
 
 class Ship(Entity):
 
+	ACCELERATION = 5
+
 	def __init__(self, ship_controller, gun_controller):
 		super(Ship, self).__init__()
 		self.__ship_controller = ship_controller
@@ -25,6 +27,8 @@ class Ship(Entity):
 
 	def tick(self, dt):
 		self.__glow_phase += dt*5
+		self.__velocity = add_vecs(self.__velocity, scale_vec(dt, self.__acceleration))
+		self.set_position(add_vecs(self.get_position(), self.__velocity))
 
 	def draw(self, screen, cx, cy):
 		pos = add_vecs(self.get_position(), (cx, cy))
@@ -39,4 +43,4 @@ class Ship(Entity):
 		screen.blit(self.__gun_image, gun_loc)
 
 	def on_accelerate(self, delta):
-		self.__acceleration = delta
+		self.__acceleration = scale_vec(Ship.ACCELERATION, delta)

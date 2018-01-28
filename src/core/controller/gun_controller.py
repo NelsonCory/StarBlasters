@@ -33,7 +33,7 @@ class GunController(Controller):
 		if event.key == pygame.K_DOWN:
 			pass
 
-	def fire_gun(self):
+	def fire_gun(self, event):
 
 		#keyboard
 		if event.key == pygame.K_SPACE:

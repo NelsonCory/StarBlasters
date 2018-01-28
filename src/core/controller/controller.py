@@ -12,3 +12,6 @@ class Controller:
 
 	def update(self):
 		pass
+
+	def receive_joy(self, event):
+		pass
