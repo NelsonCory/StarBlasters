@@ -10,7 +10,7 @@ from utils import pyganim
 
 class Ship(Entity):
 
-	ACCELERATION = 15
+	ACCELERATION = 25
 	LASER_COOLDOWN = 0.5
 
 	def __init__(self, ship_controller, gun_controller):
@@ -71,10 +71,12 @@ class Ship(Entity):
 		gun_loc = add_vecs(gun_loc, (cx, cy))
 		screen.blit(rotated_gun, gun_loc)
 
+		if isinstance(self.__blit_laser, pygame.Rect):
+			distance = magnitude(add_vecs(self.__blit_laser.center, scale_vec(-1, gun_center))) - laser_start
+			if distance > 750:
+				distance = 750
 		if self.__blit_laser == True:
 			distance = 750
-		elif isinstance(self.__blit_laser, pygame.Rect):
-			distance = magnitude(add_vecs(self.__blit_laser.center, scale_vec(-1, gun_center))) - laser_start
 
 		if self.__blit_laser != None:
 			scaled_laser = pygame.transform.scale(self.__laser_texture, (8, int(distance)))
@@ -145,5 +147,5 @@ class Ship(Entity):
 			v = add_vecs(a_center, scale_vec(-1, s_center))
 			distance = magnitude(v)
 			if distance <= a_radius+s_radius:
-				return True
+				return False
 		return False
