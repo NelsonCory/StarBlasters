@@ -6,6 +6,7 @@ from core.event_manager import *
 from core.score_database import *
 from gui.entity.asteroid import *
 from gui.entity.ship import *
+from gui.hud.game_hud import *
 import random
 from utils.vector import *
 
@@ -29,6 +30,7 @@ class World(Scene):
 		self.__score = 0
 		self.__alive = True
 		self.__ready = False
+		self.set_hud(GameHud(self))
 		self.set_camera(Camera())
 		self.add_controller(self.__ship_controller)
 		self.add_controller(self.__gun_controller)
@@ -78,6 +80,9 @@ class World(Scene):
 		bg = self.__backgrounds[random.randrange(0, len(self.__backgrounds))]
 		random.seed(None)
 		return bg
+
+	def get_score(self):
+		return self.__score
 
 	def spawn_asteroid(self):
 		prect = self.get_processing_rect()

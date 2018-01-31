@@ -8,6 +8,7 @@ class Scene:
 
 	def __init__(self):
 		self.__camera = None
+		self.__hud = None
 		self.__controllers = []
 		self.__entities = []
 
@@ -24,12 +25,20 @@ class Scene:
 	def remove_controller(self, controller):
 		self.__controllers.remove(controller)
 
+	def hud(self):
+		return self.__hud
+
+	def set_hud(self, hud):
+		self.__hud = hud
+
 	def draw(self, screen):
 		camera_rect = self.__camera.get_rect()
 		for e in self.__entities:
 			e_rect = e.get_rect()
 			if camera_rect.colliderect(e_rect):
 				e.draw(screen, -camera_rect.left, -camera_rect.top)
+		if self.__hud:
+			self.__hud.draw(screen)
 
 	def tick(self, dt):
 		process_rect = self.get_processing_rect()

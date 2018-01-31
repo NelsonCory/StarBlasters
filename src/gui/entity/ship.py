@@ -79,12 +79,13 @@ class Ship(Entity):
 			gun_loc = add_vecs(gun_loc, ship_center)
 			gun_loc = add_vecs(gun_loc, (cx, cy))
 			screen.blit(rotated_gun, gun_loc)
-
-			if self.__blit_laser != None:
-				distance = 750
+			if self.__blit_laser:
 				if isinstance(self.__blit_laser, pygame.Rect):
-					distance = max(magnitude(add_vecs(self.__blit_laser.center, scale_vec(-1, gun_center))) - laser_start, 750)
-				print("Drawing laser...")
+					x, y, width, height = self.__blit_laser
+					laser = pygame.Rect(x+cx, y+cy, width, height)
+					distance = min(magnitude(add_vecs(laser.center, scale_vec(-1, gun_loc))), 750)
+				else:
+					distance = 750
 				scaled_laser = pygame.transform.scale(self.__laser_texture, (8, int(distance)))
 				rotated_laser = pygame.transform.rotate(scaled_laser, angle)
 				laser_loc = rotated_laser.get_rect()
@@ -93,7 +94,7 @@ class Ship(Entity):
 				laser_loc.center = add_vecs(laser_loc.center, ship_center)
 				laser_loc.center = add_vecs(laser_loc.center, (cx, cy))
 				screen.blit(rotated_laser, laser_loc)
-				self.__blit_laser = None # Keep the laser active
+				self.__blit_laser = None
 
 	def kill(self):
 		self.__alive = False
