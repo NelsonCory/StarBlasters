@@ -19,6 +19,7 @@ class Ship(Entity):
 		self.__ship_controller = ship_controller
 		self.__gun_controller = gun_controller
 		self.__alive = True
+		self.__fire = False
 		self.set_position((0, 0))
 		self.__acceleration = (0, 0)
 		self.__velocity = (0, 0)
@@ -48,6 +49,9 @@ class Ship(Entity):
 		self.__glow_phase += dt*5
 		self.__velocity = scale_vec(0.95, add_vecs(self.__velocity, scale_vec(dt, self.__acceleration)))
 		self.set_position(add_vecs(self.get_position(), self.__velocity))
+		if self.__fire:
+			self.on_fire()
+			self.__fire = False
 		if self.check_collision():
 			EventManager.get_instance().send("death", True)
 
@@ -76,14 +80,11 @@ class Ship(Entity):
 			gun_loc = add_vecs(gun_loc, (cx, cy))
 			screen.blit(rotated_gun, gun_loc)
 
-			if isinstance(self.__blit_laser, pygame.Rect):
-				distance = magnitude(add_vecs(self.__blit_laser.center, scale_vec(-1, gun_center))) - laser_start
-				if distance > 750:
-					distance = 750
-			if self.__blit_laser == True:
-				distance = 750
-
 			if self.__blit_laser != None:
+				distance = 750
+				if isinstance(self.__blit_laser, pygame.Rect):
+					distance = max(magnitude(add_vecs(self.__blit_laser.center, scale_vec(-1, gun_center))) - laser_start, 750)
+				print("Drawing laser...")
 				scaled_laser = pygame.transform.scale(self.__laser_texture, (8, int(distance)))
 				rotated_laser = pygame.transform.rotate(scaled_laser, angle)
 				laser_loc = rotated_laser.get_rect()
@@ -92,8 +93,8 @@ class Ship(Entity):
 				laser_loc.center = add_vecs(laser_loc.center, ship_center)
 				laser_loc.center = add_vecs(laser_loc.center, (cx, cy))
 				screen.blit(rotated_laser, laser_loc)
-				self.__blit_laser = None
-		
+				self.__blit_laser = None # Keep the laser active
+
 	def kill(self):
 		self.__alive = False
 
@@ -103,7 +104,11 @@ class Ship(Entity):
 	def rotate_gun(self, delta):
 		self.__delta = delta
 
-	def fire(self, arg=None):
+	def fire(self, event):
+		# Set to fire on next tick
+		self.__fire = True
+
+	def on_fire(self, arg=None):
 		if time.time() < self.__last_laser_fire or not self.__alive:
 			return
 		self.__last_laser_fire = time.time() + Ship.LASER_COOLDOWN

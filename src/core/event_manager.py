@@ -13,7 +13,7 @@ class EventManager:
 		self.__queue = []
 		self.__callbacks = {}
 
-	def send(self, label, value, delay = 0):
+	def send(self, label, value = None, delay = 0):
 		self.__queue.insert(0, (label, value, time.time() + delay))
 
 	def dispatch(self):
