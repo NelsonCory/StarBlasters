@@ -12,6 +12,7 @@ class Ship(Entity):
 
 	ACCELERATION = 25
 	LASER_COOLDOWN = 0.5
+	GUN_DISTANCE = 10
 
 	def __init__(self, ship_controller, gun_controller):
 		super(Ship, self).__init__()
@@ -63,38 +64,40 @@ class Ship(Entity):
 			self.__death_animation.blit(screen,death_pos)
 			self.__death_animation.loop = False
 		else:
-			distance_from_ship = 10
-			laser_start = 5
-			pos = add_vecs(self.get_position(), (cx, cy))
-			screen.blit(self.get_texture(), pos)
-			screen.blit_alpha(self.__glow1, pos, (math.sin(self.__glow_phase)/2+0.5)*255)
+			self.draw_ship(screen, cx, cy)
+			self.draw_gun(screen, cx, cy)
+			self.draw_laser(screen, cx, cy)
 
-			ship_radius = self.get_texture().get_rect().width / 2
-			ship_center = add_vecs(self.get_position(), scale_vec(0.5, self.get_texture().get_rect().size))
-			gun_radius = ship_radius + distance_from_ship
-			gun_center = scale_vec(gun_radius, (math.cos(self.__gun_rot), -math.sin(self.__gun_rot)))
-			angle = self.__gun_rot * 180 / math.pi - 90
-			rotated_gun = pygame.transform.rotate(self.__gun_image, angle)
-			gun_loc = add_vecs(gun_center, scale_vec(-0.5, self.__gun_image.get_rect().size))
-			gun_loc = add_vecs(gun_loc, ship_center)
-			gun_loc = add_vecs(gun_loc, (cx, cy))
-			screen.blit(rotated_gun, gun_loc)
-			if self.__blit_laser:
-				if isinstance(self.__blit_laser, pygame.Rect):
-					x, y, width, height = self.__blit_laser
-					laser = pygame.Rect(x+cx, y+cy, width, height)
-					distance = min(magnitude(add_vecs(laser.center, scale_vec(-1, gun_loc))), 750)
-				else:
-					distance = 750
-				scaled_laser = pygame.transform.scale(self.__laser_texture, (8, int(distance)))
-				rotated_laser = pygame.transform.rotate(scaled_laser, angle)
-				laser_loc = rotated_laser.get_rect()
-				laser_radius = gun_radius + laser_start
-				laser_loc.center = scale_vec(laser_radius + distance/2, (math.cos(self.__gun_rot), -math.sin(self.__gun_rot)))
-				laser_loc.center = add_vecs(laser_loc.center, ship_center)
-				laser_loc.center = add_vecs(laser_loc.center, (cx, cy))
-				screen.blit(rotated_laser, laser_loc)
-				self.__blit_laser = None
+	def draw_ship(self, screen, cx, cy):
+		pos = add_vecs(self.get_position(), (cx, cy))
+		screen.blit(self.get_texture(), pos)
+		screen.blit_alpha(self.__glow1, pos, (math.sin(self.__glow_phase)/2+0.5)*255)
+
+	def draw_gun(self, screen, cx, cy):
+		angle =self.get_gun_angle()
+		rotated_gun = pygame.transform.rotate(self.__gun_image, angle)
+		gun_loc = add_vecs(self.get_gun_position(), (cx, cy))
+		screen.blit(rotated_gun, gun_loc)
+
+	def draw_laser(self, screen, cx, cy):
+		if self.__blit_laser:
+			laser_start = 5
+			if isinstance(self.__blit_laser, pygame.Rect):
+				x, y, width, height = self.__blit_laser
+				laser = pygame.Rect(x+cx, y+cy, width, height)
+				gun_loc = add_vecs(self.get_gun_position(), (cx, cy))
+				distance = min(magnitude(add_vecs(laser.center, scale_vec(-1, gun_loc))), 750)
+			else:
+				distance = 750
+			scaled_laser = pygame.transform.scale(self.__laser_texture, (8, int(distance)))
+			rotated_laser = pygame.transform.rotate(scaled_laser, self.get_gun_angle())
+			laser_loc = rotated_laser.get_rect()
+			laser_radius = self.get_rect().width/2 + laser_start + Ship.GUN_DISTANCE
+			laser_loc.center = scale_vec(laser_radius + distance/2, (math.cos(self.__gun_rot), -math.sin(self.__gun_rot)))
+			laser_loc.center = add_vecs(laser_loc.center, self.get_ship_center())
+			laser_loc.center = add_vecs(laser_loc.center, (cx, cy))
+			screen.blit(rotated_laser, laser_loc)
+			self.__blit_laser = None
 
 	def kill(self):
 		self.__alive = False
@@ -160,3 +163,16 @@ class Ship(Entity):
 			if distance <= a_radius+s_radius:
 				return True
 		return False
+
+	def get_ship_center(self):
+		return add_vecs(self.get_position(), scale_vec(0.5, self.get_texture().get_rect().size))
+
+	def get_gun_angle(self):
+		return  self.__gun_rot * 180 / math.pi - 90
+
+	def get_gun_position(self):
+		ship_radius = self.get_texture().get_rect().width / 2
+		gun_radius = ship_radius + Ship.GUN_DISTANCE
+		gun_center = scale_vec(gun_radius, (math.cos(self.__gun_rot), -math.sin(self.__gun_rot)))
+		gun_loc = add_vecs(gun_center, scale_vec(-0.5, self.__gun_image.get_rect().size))
+		return add_vecs(gun_loc, self.get_ship_center())
