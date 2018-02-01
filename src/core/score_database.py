@@ -15,10 +15,13 @@ class ScoreDatabase():
 
     def load(self):
         self.__scores = []
-        f = open(self.__path, 'r')
-        for line in f:
-            self.__scores.append(int(line))
-        f.close()
+        try:
+            f = open(self.__path, 'r')
+            for line in f:
+                self.__scores.append(int(line))
+            f.close()
+        except OSError:
+            pass
         if len(self.__scores) == 0:
             self.__scores.append(0)
         self.resort_scores()

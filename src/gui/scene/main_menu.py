@@ -10,7 +10,7 @@ class MainMenu(Scene):
 		self.__menu_controller = MenuController()
 		self.add_controller(self.__menu_controller)
 		self.set_camera(Camera())
-		self.__font = pygame.font.SysFont("Roboto", 50)
+		self.__font = self.__font = ResourceManager.get_instance().get_font("fonts/Roboto-Regular", 50)
 		self.__music = ResourceManager.get_instance().get_music("music/main_menu_theme")
 		self.__music.play(-1, 0)
 

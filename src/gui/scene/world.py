@@ -49,7 +49,6 @@ class World(Scene):
 		EventManager.get_instance().unsubscribe("scene_ready", self.on_start)
 		EventManager.get_instance().unsubscribe("activate_asteroids", self.on_ready)
 		self.__music.stop()
-		print("world destructor")
 
 	def tick(self, dt):
 		super(World, self).tick(dt)
