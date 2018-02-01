@@ -17,7 +17,7 @@ class Asteroid(Entity):
 		else:
 			self.__size = size
 		angle = random.uniform(0, 2*math.pi)
-		speed = random.randint(100, 500)
+		speed = random.randint(100, 400)
 		self.__velocity = scale_vec(speed, (math.cos(angle), math.sin(angle)))
 		self.set_position(position)
 		self.__resource_manager = ResourceManager.get_instance()

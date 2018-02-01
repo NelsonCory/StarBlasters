@@ -12,7 +12,7 @@ from utils.vector import *
 
 class World(Scene):
 
-	MIN_ASTEROIDS = 10
+	MIN_ASTEROIDS = 20
 
 	def __init__(self):
 		super(World, self).__init__()
