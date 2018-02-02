@@ -1,6 +1,7 @@
 from core.event_manager import *
-from core.camera import *
+from gui.scene.camera import *
 from core.controller.ship_controller import *
+from core.game import *
 
 class Scene:
 
@@ -74,6 +75,8 @@ class Scene:
 		return self.__camera
 
 	def set_camera(self, camera):
+		width, height = get_game_instance().get_screen().get_resolution()
+		camera.set_dimensions(width, height)
 		self.__camera = camera
 
 	def clean(self):

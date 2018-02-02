@@ -1,3 +1,7 @@
+# Grant the ability to get the current game instance across the program
+def get_game_instance():
+	return Game.get_instance()
+
 from . event_manager import *
 from . resource_manager import *
 from . score_database import *
@@ -8,22 +12,33 @@ import pygame
 
 class Game():
 
+	RESOLUTION = (1280, 720)
+
+	__instance = None
+
+	@staticmethod
+	def get_instance():
+		return Game.__instance
+
 	# Initialize pygame here
 	def __init__(self, path):
-		pygame.mixer.pre_init(44100, -16, 2, 2048)
-		pygame.mixer.init()
-		pygame.init()
-
+		Game.__instance = self
+		self.init_pygame()
 		self.__event_manager = EventManager()
 		self.__resource_manager = ResourceManager(path)
 		self.__score_database = ScoreDatabase(path)
 		self.__score_database.load()
-		self.__screen = Screen()
+		self.__screen = Screen(Game.RESOLUTION)
 		self.__done = False
 		self.__clock = pygame.time.Clock()
 
 		self.__event_manager.subscribe("on_start", self.on_start)
 		self.__event_manager.subscribe("main_menus", self.set_main_menu)
+
+	def init_pygame(self):
+		pygame.mixer.pre_init(44100, -16, 2, 2048)
+		pygame.mixer.init()
+		pygame.init()
 
 	# Main loop, returns exit code
 	def run(self):
@@ -61,3 +76,8 @@ class Game():
 
 	def set_main_menu(self, event):
 		self.__screen.set_scene(MainMenu())
+
+	# Accessors ------------------------------------------------------------------------------------
+
+	def get_screen(self):
+		return self.__screen

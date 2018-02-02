@@ -1,5 +1,5 @@
 from . scene import *
-from core.camera import *
+from . camera import *
 from core.controller.gun_controller import *
 from core.controller.ship_controller import *
 from core.event_manager import *
@@ -54,16 +54,16 @@ class World(Scene):
 		super(World, self).tick(dt)
 		if self.__alive:
 			x, y, width, height = self.__ship.get_rect()
-			self.get_camera().set_x(x-(640 - width/2))
-			self.get_camera().set_y(y-(360 - height/2))
+			self.get_camera().set_position(x-(640 - width/2), y-(360 - height/2))
 		if self.__ready:
 			while len(self.get_entities()) < World.MIN_ASTEROIDS:
 				self.spawn_asteroid()
 
 	def draw(self, screen):
 		camera = self.get_camera()
-		cx = -camera.get_x()/2
-		cy = -camera.get_y()/2
+		cx, cy = camera.get_position()
+		cx = -cx/2
+		cy = -cy/2
 		chunk_coords = -cx//self.__background_size[0], -cy//self.__background_size[1]
 		for i in range(0, 2):
 			for j in range(0, 2):
