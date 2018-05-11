@@ -7,6 +7,7 @@ from . resource_manager import *
 from . score_database import *
 from gui.scene.main_menu import *
 from gui.scene.world import *
+from gui.scene.haikus import *
 from gui.screen import *
 import pygame
 
@@ -34,6 +35,7 @@ class Game():
 
 		self.__event_manager.subscribe("on_start", self.on_start)
 		self.__event_manager.subscribe("main_menus", self.set_main_menu)
+		self.__event_manager.subscribe("haikus", self.set_haikus)
 
 	def init_pygame(self):
 		pygame.mixer.pre_init(44100, -16, 2, 2048)
@@ -76,6 +78,9 @@ class Game():
 
 	def set_main_menu(self, event):
 		self.__screen.set_scene(MainMenu())
+
+	def set_haikus(self, event):
+		self.__screen.set_scene(Haikus())
 
 	# Accessors ------------------------------------------------------------------------------------
 
