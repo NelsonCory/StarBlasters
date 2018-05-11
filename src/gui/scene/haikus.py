@@ -10,16 +10,22 @@ first_lines = ("Space is quite scary", \
 	"Unblemished and clear", \
 	"Is it cold in space?", \
 	"Don't let that hit us", \
+	"Hurtling through space", \
+	"Kaboom and you die", \
 	)
 second_lines = ("Also, it is beautiful", \
 	"Space is uninterrupted", \
 	"I don't know, but you tell me", \
 	"Oh, great, now there's a hull breach", \
+	"Minding my own damn business", \
+	"You didn't dodge it in time", \
 	)
 third_lines = ("Mostly scary though", \
 	"Then suddenly rocks", \
 	"Because you just died", \
 	"Learn to shoot lasers", \
+	"Spaceman shoots at me", \
+	"Nice going dummy", \
 	)
 
 class Haikus(Scene):
