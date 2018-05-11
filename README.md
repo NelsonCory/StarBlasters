@@ -1,14 +1,11 @@
-# Star Blasters
-A much better version of Asteroids
+# Star Blaster
+A cooperative multiplayer Asteroids-style game, created as part of the HackMT 2018 event. 
 
-## Development
-This is a quick guide on how to build and run from soruce
-
-### Configuring the Environment
-To set up the development environment, simply run `configure`
-
-### Run the Game
-Now, simply execute `run` to start the game
-
-### Build the Game
-To build and package the game for deployment, simply execute the `build` script
+## Contributors
+Bryce Ault - Programming
+Chris Clouse - Programming
+Cory Nelson - Programming
+David Ludwig - Programming
+Hannah Owens - Art
+Raine Taylor - Programming + Music
+Stephanie York - Art
