@@ -13,6 +13,7 @@ class MainMenu(Scene):
 		self.__font = self.__font = ResourceManager.get_instance().get_font("fonts/Roboto-Regular", 50)
 		self.__music = ResourceManager.get_instance().get_music("music/main_menu_theme")
 		self.__music.play(-1, 0)
+		print("MainMenu initialized")
 
 	def __del__(self):
 		self.__music.stop()
