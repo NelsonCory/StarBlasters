@@ -41,6 +41,7 @@ class Game():
 		pygame.mixer.pre_init(44100, -16, 2, 2048)
 		pygame.mixer.init()
 		pygame.init()
+		pygame.mouse.set_visible(False) #CHECK ON MACHINE
 
 	# Main loop, returns exit code
 	def run(self):
