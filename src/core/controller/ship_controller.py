@@ -11,6 +11,9 @@ class ShipController():
 		self.__joy_delta = [0, 0] # x, y
 		self.__is_boosted = False
 		self.__recently_boosted = False
+		self.__boost_length = 1
+		self.__boost_cooldown_length = 5
+		self.__boost_multiplier = 2
 		self.__dirty = False
 
 		#set up joystick
@@ -54,24 +57,21 @@ class ShipController():
 			self.__dirty = True
 
 	def update(self):
-
 		# Handle Ship Player's Speed Boost
-		if self.__is_boosted and time.time() > self.__boost_start + 1:
+		if self.__is_boosted and time.time() > self.__boost_start + self.__boost_length:
 			self.__is_boosted = False
 			self.__recently_boosted = True
 			self.__boost_cooldown_start = time.time()
-		if self.__recently_boosted and time.time() > self.__boost_cooldown_start + 5:
+		if self.__recently_boosted and time.time() > self.__boost_cooldown_start + self.__boost_cooldown_length:
 			self.__recently_boosted = False
-			
 		#if not self.__dirty:
 		#	return
 		if not self.__is_boosted:
 			dx = min(-self.__key_delta[2], self.__joy_delta[0]) + max(self.__key_delta[3], self.__joy_delta[0])
 			dy = min(-self.__key_delta[0], self.__joy_delta[1]) + max(self.__key_delta[1], self.__joy_delta[1])
 		else:
-			dx = 2 * ( min(-self.__key_delta[2], self.__joy_delta[0]) + max(self.__key_delta[3], self.__joy_delta[0]) )
-			dy = 2 * ( min(-self.__key_delta[0], self.__joy_delta[1]) + max(self.__key_delta[1], self.__joy_delta[1]) )
-			print(dx, dy)
+			dx = self.__boost_multiplier * ( min(-self.__key_delta[2], self.__joy_delta[0]) + max(self.__key_delta[3], self.__joy_delta[0]) )
+			dy = self.__boost_multiplier * ( min(-self.__key_delta[0], self.__joy_delta[1]) + max(self.__key_delta[1], self.__joy_delta[1]) )
 
 
 		self.__dirty = False
