@@ -1,7 +1,7 @@
 # Star Blasters
 A cooperative multiplayer Asteroids-style game built with the PyGame framework. This project was started by a group of student developers at HackMT 2018, where it received 2nd Place for the Hacker's Choice award. Later work was done with this project by members of MTSU Sandbox, where it featured in a student-built arcade cabinet used in organization events and advertising.
 
-##How to Play
+## How to Play
 Star Blasters may be played single-player or multi-player. Using a gamepad is encouraged, however keyboard support is provided. One player controls a spaceship's movement, and is tasked with dodging asteroids and navigating the map, while the other player controls the ships guns, a rotating turret.
 
 With a single keyboard, you may use the WASD keys to move the ship, the arrow keys to rotate the ship's gun, and the space button to shoot.
